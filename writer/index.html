@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Html CRUD with Pure JavaScript
+    </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <table class="t1">
+            <div class="t2">
+                <label>Author</label>
+                <input type="text" name="Author" id="Author">
+                <label>Description</label>
+                <input type="text" name="Description" id="Description">
+            </div>
+
+        <form onsubmit="event.preventDefault();addChapter();" autocomplete="off">
+            <div class="t3">
+                <label>Chapter</label>
+                <input type="text" name="Chapter" id="Chapter">
+                <button class="b1" type="submit">Add</button>
+            </div>
+        </form>
+    </table>
+    <button class="bR" id="bR" onclick="Render()">Render</button> <button id="bE" class="bE">Edit</button>
+    <div id="textEdit">
+        <textarea id="text1" class="text1"></textarea>
+    </div>
+    <div id="text2" style="white-space:pre-line; white-space:pre-wrap" class="text2">
+    </div>
+
+
+<script src="script.js"></script>
+</body>
+
+</html>
