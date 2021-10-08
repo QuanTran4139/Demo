@@ -26,34 +26,62 @@ body {
     width: 50px;
     height: 20px;
     position: absolute;
-    left:180px;
-    top: 26%;
+    left:630px;
+    top: 18.5%;
 }
 .bR{
     width: 100px;
     height: 25px;
     position: absolute;
     left:360px;
-    top: 25%;
+    top: 30%;
 }
 .bE{
     width: 100px;
     height: 25px;
     position: absolute;
     left: 360px;
-    top: 30%;
+    top: 35%;
+}
+.bFnt{
+    width: 100px;
+    height: 25px;
+    position: absolute;
+    left: 460px;
+    top: 25%;
+}
+.s1{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 560px;
+    top: 25%;
+}
+.s2{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 610px;
+    top: 25%;
+}
+.s3{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 660px;
+    top: 25%;
 }
 .text1{
     width: 350px;
     height: 500px;
     position: absolute;
     left: 460px;
-    top: 25%;
+    top: 30%;
 }
 .text2{
     width: 350px;
     height: 500px;
     position: absolute;
     left: 820px;
-    top: 25%;
+    top: 30%;
 }
