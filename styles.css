@@ -1,0 +1,108 @@
+body {
+    background-color: lightblue;
+
+}
+.t1{
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+.t2{
+    width: 4px;
+    height: 0px;
+    position: absolute;
+    left: 460px;
+    top: 5%;
+}
+.t3{
+    width: 100px;
+    height: 70px;
+    position: absolute;
+    left:460px;
+    top: 16%;
+}
+.t4{
+    width: 150px;
+    height: 70px;
+    position: absolute;
+    left:175px;
+    top: 1%;
+}
+.b1{
+    width: 50px;
+    height: 20px;
+    position: absolute;
+    left:810px;
+    top: 18.5%;
+}
+.bR{
+    width: 100px;
+    height: 25px;
+    position: absolute;
+    left:360px;
+    top: 30%;
+}
+.bE{
+    width: 100px;
+    height: 25px;
+    position: absolute;
+    left: 360px;
+    top: 35%;
+}
+.bFnt{
+    width: 100px;
+    height: 25px;
+    position: absolute;
+    left: 460px;
+    top: 25%;
+}
+.s1{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 560px;
+    top: 25%;
+}
+.s2{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 610px;
+    top: 25%;
+}
+.s3{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 660px;
+    top: 25%;
+}
+.s4{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 710px;
+    top: 25%;
+}
+.s5{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 760px;
+    top: 25%;
+}
+.text1{
+    width: 350px;
+    height: 500px;
+    position: absolute;
+    left: 460px;
+    top: 30%;
+}
+.text2{
+    width: 350px;
+    height: 500px;
+    position: absolute;
+    left: 820px;
+    top: 30%;
+}
