@@ -9,29 +9,30 @@
 </head>
 
 <body>
+<div id="d1">
     <table class="t1">
             <div class="t2">
-                <label>Author*</label>
-                <input type="text" name="Author" id="Author"/>
-                <label>Description*</label>
-                <input type="text" name="Description" id="Description"/>
+                <label id="l1">Author</label>
+                <input type="text" name="Author" id="Author" required id="Author"/>
+                <label id="l2">Description</label>
+                <input type="text" name="Description" id="Description" required id="Description"/>
             </div>
 
             <div class="t3">
-                <label>Chapter Name*</label>
+                <label id="l3">Chapter Name</label>
                 <input type="text" name="ChapterName" id="ChapterName"/>
                 <div class="t4">
-                    <label>Chapter Number*</label>
-                    <input type="number" min="1" step="1" default="1" name="ChapterNumber" id="ChapterNumber"/>
+                    <label id="l4">Chapter Number</label>
+                    <input type="number" min="1" name="ChapterNumber" id="ChapterNumber" class="ChapterNumber"/>
+                    <button class="b1" onclick="addChapter()">Add</button>
                 </div>
             </div>
-        <button class="b1" type="submit" onclick="addChapter()">Add</button>
+
     </table>
 
     <button class="bR" id="bR" onclick="Render()">Render</button>
     <button id="bS" class="bS" onclick="Save()">Save</button>
-    <button class="bFnt" id="bFnt" onclick="">Footnote</button>
-
+    <button class="bFnt" id="footnoteBtn" onclick="AddFootnoteOrChapter('footnoteNumber')">Footnote</button>
     <select id="s1" class="s1" onchange="selectStyle()">
         <option value="" selected disabled hidden>Style</option>
         <option value="bold">Bold</option>
@@ -74,8 +75,12 @@
     <div id="textEdit">
         <textarea id="text1" class="text1" ></textarea>
     </div>
-    <div id="text2" style="white-space:pre-line; white-space:pre-wrap" class="text2"></div>
-
+    <div>
+        <div id="text2" style="white-space:pre-line; white-space:pre-wrap" class="text2"></div>
+        <div id="footnote"></div>
+        <div id="chapter"></div>
+    </div>
+</div>
 <script src="script.js"></script>
 </body>
 </html>

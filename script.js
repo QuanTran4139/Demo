@@ -1,17 +1,20 @@
 function readChapter() {
     let data = document.getElementById("ChapterName").value;
     let id = document.getElementById("ChapterNumber").value;
-    let formData = "<chapter" +id+ ":" +data+ "/>" + "<size:35px" + ">" + "<bold" + ">" + data +  "</bold></size>";
+    let formData = "<chapter:" +id+ ">" + data +  "</chapter>";
     return formData;
 }//get value from Chapter textbox
 function insertNewChapter(data) {
-    let textEdit = document.getElementById("text1");
-    textEdit.innerHTML += (data);
+    let getText = document.getElementById("text1");
+    let AllText = getText.value + data;
+    getText.value = AllText;
 }//insert readChapter into text editor
 function addChapter(){
     let formData = readChapter();
     insertNewChapter(formData);
 }//initialize insertNewChapter with data from readChapter
+
+
 function selectStyle(){
     let e = document.getElementById("s1");
     let Style = e.options[e.selectedIndex].value;
@@ -29,6 +32,7 @@ function getStyle(data) {
     let sel = "";
     for(let i = start;i<finish;i++){
        sel = sel + allText[i];
+       console.log(sel);
     }
     let startInt = parseInt(start);
     let finishInt = parseInt(finish);
@@ -37,6 +41,8 @@ function getStyle(data) {
     txtarea.value = newText;
 
 }//insert style tag into text editor
+
+
 function selectAlign(){
     let e = document.getElementById("s3");
     let Style = e.options[e.selectedIndex].value;
@@ -54,6 +60,7 @@ function getAlign(data) {
     let sel = "";
     for(let i = start;i<finish;i++){
         sel = sel + allText[i];
+        console.log(sel);
     }
     let startInt = parseInt(start);
     let finishInt = parseInt(finish);
@@ -61,6 +68,8 @@ function getAlign(data) {
     let newText = allText.substring(0, startInt) +"<a:" +data+">" +sel+"</a>" + allText.substring(finishInt, allText.length);
     txtarea.value = newText;
 }//insert align tag into text editor
+
+
 function selectSize(){
     let e = document.getElementById("s2");
     let Style = e.options[e.selectedIndex].value;
@@ -78,6 +87,7 @@ function getSize(data) {
     let sel = "";
     for(let i = start;i<finish;i++){
         sel = sel + allText[i];
+        console.log(sel);
     }
     let startInt = parseInt(start);
     let finishInt = parseInt(finish);
@@ -85,6 +95,8 @@ function getSize(data) {
     let newText = allText.substring(0, startInt) +"<size:" +data+">" +sel+ "</size>" + allText.substring(finishInt, allText.length);
     textSize.value = newText;
 }//insert size tag into text editor
+
+
 function selectFont(){
     let e = document.getElementById("s4");
     let Style = e.options[e.selectedIndex].value;
@@ -103,6 +115,7 @@ function getFont(data) {
     let sel = "";
     for(let i = start;i<finish;i++){
         sel = sel + allText[i];
+        console.log(sel);
     }
     let startInt = parseInt(start);
     let finishInt = parseInt(finish);
@@ -110,6 +123,8 @@ function getFont(data) {
     let newText = allText.substring(0, startInt) +"<font:" +data+">" +sel+ "</font>" + allText.substring(finishInt, allText.length);
     textSize.value = newText;
 }//insert font tag into text editor
+
+
 function selectColor(){
     let e = document.getElementById("s5");
     let Style = e.options[e.selectedIndex].value;
@@ -128,6 +143,7 @@ function getColor(data) {
     let sel = "";
     for(let i = start;i<finish;i++){
         sel = sel + allText[i];
+        console.log(sel);
     }
     let startInt = parseInt(start);
     let finishInt = parseInt(finish);
@@ -135,6 +151,8 @@ function getColor(data) {
     let newText = allText.substring(0, startInt) +"<color:" +data+">" +sel+ "</color>" + allText.substring(finishInt, allText.length);
     textSize.value = newText;
 }//insert color tag into text editor
+
+
 function Render(){
     var authorInput = document.getElementById("text1").value;
     authorInput = authorInput.replace(/<bold[^>]*>/g,'<b>')														//Replace tag <bold> with <b>
@@ -151,24 +169,172 @@ function Render(){
         .replace(/<\/size>/g, '</span>')													//Replace tag </size> with </span>
         .replace(/<a:(\w+)>/g, "<p align=\"$1\">")                                      //replace tag <a:[text align]> with <align=[text align]>
         .replace(/<\/a>/g, '</p>')                                                      //replace tag </a> with </align>
-        .replace(/<chapter(\w+):((\s*)(\w*))>/g,"<span id=\"$1\" class=\"$2\">")
-        .replace(/<\/chapter>/g, '</span>')
+        .replace(/<footnote:(\d+)>(.*?)<\/footnote>/g, "<a href=\"#source-$1\" id=\"footnote-$1\">" + '[$1]' + "</a>")
+        .replace(/<chapter:(\d+)>(.*?)<\/chapter>/g, "<h2 id=\"chapter-$1\">" + 'Chapter $1 - $2' + "</h2>");
     console.log(authorInput);
     authorInput = "<html>" + authorInput + "</html>";
+    RenderFootnote(authorInput);
+    RenderChapter(authorInput);
     var convertInputToHTMLElem = new DOMParser().parseFromString(authorInput, "text/xml");
     console.log(convertInputToHTMLElem);
     document.getElementById("text2").innerHTML = convertInputToHTMLElem.firstChild.innerHTML;
 } //render tags in text editor to HTML tags
+
+
 function Save(){
     let Author = document.getElementById("Author").value;
     let Description = document.getElementById("Description").value;
-    let ChapterName = document.getElementById("ChapterName").value;
-    let ChapterNumber = document.getElementById("ChapterNumber").value;
     let TextInChapter = document.getElementById("text1").value;
-    if(Author != "" && Description != "" && ChapterName != "" && ChapterNumber != "" && TextInChapter != ""){
-        console.log(Author,Description,ChapterName,ChapterNumber,TextInChapter);
-    }
-    else{
-        alert("Please fill in all the required(*)");
+    if(Author != "" && Description != "" && TextInChapter != ""){
+        console.log(Author,Description,TextInChapter);
+    }else if(Author == ""){
+        alert("Please input Author");
+    }else if(Description ==""){
+        alert("Please input Description")
     }
 }
+
+
+function AddFootnoteOrChapter(footnoteOrChapter){
+    if (footnoteOrChapter == "footnoteNumber")
+    {
+        var contentBetweenTag = document.getElementById("text1");
+        var selectedContent = document.getSelection().toString();
+        var startCaret = document.getElementById("text1").selectionStart;
+        var endCaret = document.getElementById("text1").selectionEnd;
+        var openTag = "<footnote:[replace this with a number and add content between these tags]>";
+        var closeTag = "</footnote>";
+
+        contentBetweenTag.value = contentBetweenTag.value.substring(0, startCaret)
+            + openTag
+            + selectedContent
+            + closeTag
+            + contentBetweenTag.value.substring(endCaret, contentBetweenTag.value.length);
+    }
+}//This function is used to add footnote tags
+
+
+function RenderFootnote(){
+    //These 3 lines are used to get the contents of the footnotes and put them into an array called "footnoteContentArray"
+    //var footnote = document.getElementById("text1").value;
+    if (GetFoonoteContent() != null)
+    {
+        var replaceContent = GetFoonoteContent();
+        var footnoteContentArray = replaceContent.split(",");
+
+        //This for loop is used to create div elements with id according to the id of the footnotes
+        var footnoteElem = document.getElementById("footnote");
+        footnoteElem.innerHTML = "<hr>";
+        var footnoteDiv;
+        //for (var i = footnoteContentArray.length; i > 0; i--)
+        for (var i = 1; i <= footnoteContentArray.length; i++)
+        {
+            //This conditional statement is used to check if the element to be created has been created or not.
+            //This is used to prevent duplication of elementsvar cnt = i+1;
+            if (document.getElementById("source-" + i) == null)
+            {
+                footnoteDiv = document.createElement("div");
+                footnoteDiv.id = "source-" + i;
+                footnoteElem.appendChild(footnoteDiv);
+                //insertAfter(footnoteElem, footnoteDiv);
+            }
+        }
+
+        //This loop is used to add the contents of footnotes inside the div element created by the above loop
+        for (var i = 0; i < footnoteContentArray.length; i++)
+        {
+            var cnt = i+1;
+            document.getElementById("source-" + cnt).innerHTML = footnoteContentArray[i] + '<a href="#footnote-' + cnt + '">[Back to footnote ' + cnt + ']</a>';
+        }
+    }
+    else
+    {
+        return;
+    }
+}//This function is used to render the footnotes
+
+
+function GetFoonoteContent(){
+    var entireInput = document.getElementById("text1").value;
+    if (entireInput.match(/<footnote:(\d+)>(.*?)<\/footnote>/g) != null)
+    {
+        var entireFootnotes = entireInput.match(/<footnote:(\d+)>(.*?)<\/footnote>/g).toString();
+        var actualContent = entireFootnotes.replace(/<footnote:(\d+)>(.*?)<\/footnote>/g, '$2');
+        console.log(actualContent);
+
+        return actualContent;
+    }
+    else
+    {
+        return null;
+    }
+}//This function is used to get the actual content between the footnote tags
+
+
+function RenderChapter(){
+    //These 3 lines are used to get the contents of the footnotes and put them into an array called "footnoteContentArray"
+    //var footnote = document.getElementById("text1").value;
+    if (GetChapterContent() != null)
+    {
+        var replaceContent = GetChapterContent();
+        var chapterContentArray = replaceContent.split(",");
+
+        //This for loop is used to create div elements with id according to the id of the footnotes
+        var chapterElem = document.getElementById("chapter");
+        var chapterDiv;
+        for (var i = 1; i <= chapterContentArray.length; i++)
+        {
+            //This conditional statement is used to check if the element to be created has been created or not.
+            //This is used to prevent duplication of elementsvar cnt = i+1;
+            if (document.getElementById("chapter-" + i) == null)
+            {
+                chapterDiv = document.createElement("div");
+                chapterDiv.id = "chapter-" + i;
+                chapterElem.appendChild(chapterDiv);
+            }
+            else
+            {
+                var thisChapterElem = document.getElementById("chapter-" + i);
+                thisChapterElem.remove();
+                chapterDiv = document.createElement("div");
+                chapterDiv.id = "chapter-" + i;
+                chapterElem.appendChild(chapterDiv);
+            }
+        }
+
+        //This loop is used to add the contents of footnotes inside the div element created by the above loop
+        for (var i = 0; i < chapterContentArray.length; i++)
+        {
+            var cnt = i+1;
+            //document.getElementById("chapter-" + cnt).innerHTML = chapterContentArray[i] + '<a href="#chapter-' + cnt + '">[Back to footnote ' + cnt + ']</a>';
+            document.getElementById("chapter-" + cnt).innerHTML = '<a href="#chapter-' + cnt + '">' + 'Chapter ' + cnt + ' - ' + chapterContentArray[i] + '</a>';
+        }
+    }
+    else
+    {
+        return;
+    }
+}//This function is used to render the Chapter
+
+
+function GetChapterContent(){
+    var entireInput = document.getElementById("text1").value;
+    if (entireInput.match(/<chapter:(\d+)>(.*?)<\/chapter>/g) != null)
+    {
+        var entireChapters = entireInput.match(/<chapter:(\d+)>(.*?)<\/chapter>/g).toString();
+        var actualContent = entireChapters.replace(/<chapter:(\d+)>(.*?)<\/chapter>/g, '$2');
+        console.log(actualContent);
+
+        return actualContent;
+    }
+    else
+    {
+        return null;
+    }
+}//This function is used to get the actual content between the Chapter tags
+
+
+function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}//This function is used to add a new DOM element after a DOM element.
+//Taken from: https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
