@@ -16,7 +16,7 @@ body {
     top: 5%;
 }
 .t3{
-    width: 100px;
+    width: 150px;
     height: 70px;
     position: absolute;
     left:460px;
@@ -43,7 +43,7 @@ body {
     left:360px;
     top: 30%;
 }
-.bE{
+.bS{
     width: 100px;
     height: 25px;
     position: absolute;
@@ -105,4 +105,8 @@ body {
     position: absolute;
     left: 820px;
     top: 30%;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
 }

@@ -11,24 +11,25 @@
 <body>
     <table class="t1">
             <div class="t2">
-                <label>Author</label>
+                <label>Author*</label>
                 <input type="text" name="Author" id="Author"/>
-                <label>Description</label>
+                <label>Description*</label>
                 <input type="text" name="Description" id="Description"/>
             </div>
 
             <div class="t3">
-                <label>Chapter Name</label>
+                <label>Chapter Name*</label>
                 <input type="text" name="ChapterName" id="ChapterName"/>
                 <div class="t4">
-                    <label>Chapter Number</label>
+                    <label>Chapter Number*</label>
                     <input type="number" min="1" step="1" default="1" name="ChapterNumber" id="ChapterNumber"/>
                 </div>
             </div>
         <button class="b1" type="submit" onclick="addChapter()">Add</button>
     </table>
 
-    <button class="bR" id="bR" onclick="Render()">Render</button> <button id="bE" class="bE">Edit</button>
+    <button class="bR" id="bR" onclick="Render()">Render</button>
+    <button id="bS" class="bS" onclick="Save()">Save</button>
     <button class="bFnt" id="bFnt" onclick="">Footnote</button>
 
     <select id="s1" class="s1" onchange="selectStyle()">

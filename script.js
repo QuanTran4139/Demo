@@ -1,7 +1,7 @@
 function readChapter() {
     let data = document.getElementById("ChapterName").value;
     let id = document.getElementById("ChapterNumber").value;
-    let formData = "<chapter" +id+ ":" +data+ ">" + "<size:35px" + ">" + "<bold" + ">" + data +  "</bold></size></chapter>";
+    let formData = "<chapter" +id+ ":" +data+ "/>" + "<size:35px" + ">" + "<bold" + ">" + data +  "</bold></size>";
     return formData;
 }//get value from Chapter textbox
 function insertNewChapter(data) {
@@ -58,7 +58,7 @@ function getAlign(data) {
     let startInt = parseInt(start);
     let finishInt = parseInt(finish);
     //append the text;
-    let newText = allText.substring(0, startInt) +"<" +data+">" +sel+"</"+data+">" + allText.substring(finishInt, allText.length);
+    let newText = allText.substring(0, startInt) +"<a:" +data+">" +sel+"</a>" + allText.substring(finishInt, allText.length);
     txtarea.value = newText;
 }//insert align tag into text editor
 function selectSize(){
@@ -148,10 +148,27 @@ function Render(){
         .replace(/<font:((\w+)((\s*)(\w*))*)>/g, "<span style=\"font-family:'$1'\">")		//Replace tag <font:[font name]> with <span style="font-family:[font name]>
         .replace(/<\/font>/g,'</span>')													//Replace tag </font> with </span>
         .replace(/<size:(\d+)px>/g, "<span style=\"font-size:$1px\">")						//Replace tag <size:[font size]px> with <span style="font-size:[font size]px>
-        .replace(/<\/size>/g, '</span>');													//Replace tag </size> with </span>
+        .replace(/<\/size>/g, '</span>')													//Replace tag </size> with </span>
+        .replace(/<a:(\w+)>/g, "<p align=\"$1\">")                                      //replace tag <a:[text align]> with <align=[text align]>
+        .replace(/<\/a>/g, '</p>')                                                      //replace tag </a> with </align>
+        .replace(/<chapter(\w+):((\s*)(\w*))>/g,"<span id=\"$1\" class=\"$2\">")
+        .replace(/<\/chapter>/g, '</span>')
     console.log(authorInput);
     authorInput = "<html>" + authorInput + "</html>";
     var convertInputToHTMLElem = new DOMParser().parseFromString(authorInput, "text/xml");
     console.log(convertInputToHTMLElem);
     document.getElementById("text2").innerHTML = convertInputToHTMLElem.firstChild.innerHTML;
 } //render tags in text editor to HTML tags
+function Save(){
+    let Author = document.getElementById("Author").value;
+    let Description = document.getElementById("Description").value;
+    let ChapterName = document.getElementById("ChapterName").value;
+    let ChapterNumber = document.getElementById("ChapterNumber").value;
+    let TextInChapter = document.getElementById("text1").value;
+    if(Author != "" && Description != "" && ChapterName != "" && ChapterNumber != "" && TextInChapter != ""){
+        console.log(Author,Description,ChapterName,ChapterNumber,TextInChapter);
+    }
+    else{
+        alert("Please fill in all the required(*)");
+    }
+}
