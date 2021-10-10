@@ -182,15 +182,18 @@ function Render(){
 
 
 function Save(){
+    let Title = document.getElementById("Title").value;
     let Author = document.getElementById("Author").value;
     let Description = document.getElementById("Description").value;
     let TextInChapter = document.getElementById("text1").value;
-    if(Author != "" && Description != "" && TextInChapter != ""){
-        console.log(Author,Description,TextInChapter);
+    if(Author != "" && Description != "" && TextInChapter != "" && Title != ""){
+        console.log(Title,Author,Description,TextInChapter);
     }else if(Author == ""){
         alert("Please input Author");
     }else if(Description ==""){
         alert("Please input Description")
+    }else if(Title =="") {
+        alert("Please input Title")
     }
 }
 
