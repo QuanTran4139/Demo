@@ -150,7 +150,7 @@ function getColor(data) {
         console.log(sel);
     }
     //append the text;
-    let newText = allText.substring(0, start) +"color:" +data+">" +sel+"</a>" + allText.substring(parseInt(finish ), allText.length);
+    let newText = allText.substring(0, start) +"<color:" +data+">" +sel+"</a>" + allText.substring(parseInt(finish ), allText.length);
     txtarea.value = newText;
 }//insert color tag into text editor
 
@@ -163,17 +163,17 @@ function Render(){
         .replace(/<\/italic>/g,'</i>')														//Replace tag </italic> with </i>
         .replace(/<underline[^>]*>/g,'<u>')												//Replace tag <underline> with <u>
         .replace(/<\/underline[^>]*>/g,'</u>')												//Replace tag </underline> with </u>
-        .replace(/<color:(\w+)>/g, "<span style=\"color:'$1'\">")								//Replace tag <color:[color name/color hex code] with <span style="color:[color name/color hex code]>
+        .replace(/<color:(\w+)>/g, "<span style=\"color:$1\">")								//Replace tag <color:[color name/color hex code] with <span style="color:[color name/color hex code]>
         .replace(/(<\/color>)/g,'</span>')													//Replace tag </color> with </span>
         .replace(/<font:((\w+)((\s*)(\w*))*)>/g, "<span style=\"font-family:'$1'\">")		//Replace tag <font:[font name]> with <span style="font-family:[font name]>
         .replace(/<\/font>/g,'</span>')													//Replace tag </font> with </span>
-        .replace(/<size:(\d+)px>/g, "<span class='align' style=\"font-size:'$1'px\">")						//Replace tag <size:[font size]px> with <span style="font-size:[font size]px>
+        .replace(/<size:(\d+)px>/g, "<span class='align' style=\"font-size:$1px\">")						//Replace tag <size:[font size]px> with <span style="font-size:[font size]px>
         .replace(/<\/size>/g, '</span>')													//Replace tag </size> with </span>
         .replace(/<a:(\w+)>/g, "<span class=\"$1\">")                                      //replace tag <a:[text align]> with <align=[text align]>
         .replace(/<\/a>/g, '</span>')                                                      //replace tag </a> with </align>
         .replace(/<footnote:(\d+)>(.*?)<\/footnote>/g, "<a href=\"#source-$1\" id=\"footnote-$1\">" + '[$1]' + "</a>")
         .replace(/<chapter:(\d+)>(.*?)<\/chapter>/g, "<h2 id=\"chapter-$1\">" + 'Chapter $1 - $2' + "</h2>")
-        .replace(/\n/g,"<br/>");
+        .replace(/\n/g,"<br></br>");
     console.log(authorInput);
     authorInput = "<html>" + authorInput + "</html>";
     RenderFootnote(authorInput);
