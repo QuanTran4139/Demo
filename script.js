@@ -35,10 +35,9 @@ function getStyle(data) {
         sel = sel + allText[i];
         console.log(sel);
     }
-    let startInt = parseInt(start);
-    let finishInt = parseInt(finish);
+
     //append the text;
-    let newText = allText.substring(0, startInt) +"<" +data+">" +sel+"</"+data+">" + allText.substring(finishInt, allText.length);
+    let newText = allText.substring(0, start) +"<" +data+">" +sel+"</"+data+">" + allText.substring(finish, allText.length);
     txtarea.value = newText;
 
 }//insert style tag into text editor
@@ -80,23 +79,23 @@ function selectSize(){
 }//get selected size option
 function getSize(data) {
     // obtain the object reference for the textarea>
-    let textSize = document.getElementById("text1");
+    let txtarea = document.getElementById("text1");
     // obtain the index of the first selected character
     let start = txtarea.selectionStart;
     // obtain the index of the last selected character
     let finish = txtarea.selectionEnd;
-    let allText = textSize.value;
+    console.log(start);
+    console.log(finish);
+    let allText = txtarea.value;
     // obtain the selected text
     let sel = "";
     for(let i = start;i<finish;i++){
         sel = sel + allText[i];
         console.log(sel);
     }
-    let startInt = parseInt(start);
-    let finishInt = parseInt(finish);
     //append the text;
-    let newText = allText.substring(0, startInt) +"<size:" +data+">" +sel+ "</size>" + allText.substring(finishInt, allText.length);
-    textSize.value = newText;
+    let newText = allText.substring(0, start) +"<size:" +data+">" +sel+"</a>" + allText.substring(parseInt(finish ), allText.length);
+    txtarea.value = newText;
 }//insert size tag into text editor
 
 
@@ -108,23 +107,23 @@ function selectFont(){
 }//get selected font option
 function getFont(data) {
     // obtain the object reference for the textarea>
-    let textSize = document.getElementById("text1");
+    let txtarea = document.getElementById("text1");
     // obtain the index of the first selected character
     let start = txtarea.selectionStart;
     // obtain the index of the last selected character
     let finish = txtarea.selectionEnd;
-    let allText = textSize.value;
+    console.log(start);
+    console.log(finish);
+    let allText = txtarea.value;
     // obtain the selected text
     let sel = "";
     for(let i = start;i<finish;i++){
         sel = sel + allText[i];
         console.log(sel);
     }
-    let startInt = parseInt(start);
-    let finishInt = parseInt(finish);
     //append the text;
-    let newText = allText.substring(0, startInt) +"<font:" +data+">" +sel+ "</font>" + allText.substring(finishInt, allText.length);
-    textSize.value = newText;
+    let newText = allText.substring(0, start) +"<font:" +data+">" +sel+"</a>" + allText.substring(parseInt(finish ), allText.length);
+    txtarea.value = newText;
 }//insert font tag into text editor
 
 
@@ -136,24 +135,23 @@ function selectColor(){
 }//get selected color option
 function getColor(data) {
     // obtain the object reference for the textarea>
-    let textSize = document.getElementById("text1");
+    let txtarea = document.getElementById("text1");
     // obtain the index of the first selected character
     let start = txtarea.selectionStart;
     // obtain the index of the last selected character
     let finish = txtarea.selectionEnd;
-    let allText = textSize.value;
+    console.log(start);
+    console.log(finish);
+    let allText = txtarea.value;
     // obtain the selected text
     let sel = "";
     for(let i = start;i<finish;i++){
         sel = sel + allText[i];
         console.log(sel);
     }
-    let startInt = parseInt(start);
-    let finishInt = parseInt(finish);
     //append the text;
-    let newText = allText.substring(0, startInt) +"<color:" +data+">" +sel+ "</color>" + allText.substring(finishInt, allText.length);
-    textSize.value = newText;
-
+    let newText = allText.substring(0, start) +"color:" +data+">" +sel+"</a>" + allText.substring(parseInt(finish ), allText.length);
+    txtarea.value = newText;
 }//insert color tag into text editor
 
 
@@ -165,11 +163,11 @@ function Render(){
         .replace(/<\/italic>/g,'</i>')														//Replace tag </italic> with </i>
         .replace(/<underline[^>]*>/g,'<u>')												//Replace tag <underline> with <u>
         .replace(/<\/underline[^>]*>/g,'</u>')												//Replace tag </underline> with </u>
-        .replace(/<color:(\w+)>/g, '<span style="color:$1">')								//Replace tag <color:[color name/color hex code] with <span style="color:[color name/color hex code]>
+        .replace(/<color:(\w+)>/g, "<span style=\"color:'$1'\">")								//Replace tag <color:[color name/color hex code] with <span style="color:[color name/color hex code]>
         .replace(/(<\/color>)/g,'</span>')													//Replace tag </color> with </span>
         .replace(/<font:((\w+)((\s*)(\w*))*)>/g, "<span style=\"font-family:'$1'\">")		//Replace tag <font:[font name]> with <span style="font-family:[font name]>
         .replace(/<\/font>/g,'</span>')													//Replace tag </font> with </span>
-        .replace(/<size:(\d+)px>/g, "<span class='align' style=\"font-size:$1px\">")						//Replace tag <size:[font size]px> with <span style="font-size:[font size]px>
+        .replace(/<size:(\d+)px>/g, "<span class='align' style=\"font-size:'$1'px\">")						//Replace tag <size:[font size]px> with <span style="font-size:[font size]px>
         .replace(/<\/size>/g, '</span>')													//Replace tag </size> with </span>
         .replace(/<a:(\w+)>/g, "<span class=\"$1\">")                                      //replace tag <a:[text align]> with <align=[text align]>
         .replace(/<\/a>/g, '</span>')                                                      //replace tag </a> with </align>

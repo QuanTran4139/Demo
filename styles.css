@@ -121,8 +121,7 @@ body {
 }
 .center{
     display: inline-block;
-    align-content: center;
-    border: solid black;
+    justify-content: center;
 }
 .right{
     display: inline-block;
