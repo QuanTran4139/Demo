@@ -18,21 +18,22 @@ function addChapter(){
 function selectStyle(){
     let e = document.getElementById("s1");
     let Style = e.options[e.selectedIndex].value;
+    e.selectedIndex = 0;
     return getStyle(Style);
 }//get selected style option
 function getStyle(data) {
     // obtain the object reference for the textarea>*/
     let txtarea = document.getElementById("text1");
     // obtain the index of the first selected character
-    let start = txtarea.selectionStart.toString();
+    let start = txtarea.selectionStart;
     // obtain the index of the last selected character
-    let finish = txtarea.selectionEnd.toString();
+    let finish = txtarea.selectionEnd;
     let allText = txtarea.value;
     // obtain the selected text
     let sel = "";
     for(let i = start;i<finish;i++){
-       sel = sel + allText[i];
-       console.log(sel);
+        sel = sel + allText[i];
+        console.log(sel);
     }
     let startInt = parseInt(start);
     let finishInt = parseInt(finish);
@@ -46,15 +47,18 @@ function getStyle(data) {
 function selectAlign(){
     let e = document.getElementById("s3");
     let Style = e.options[e.selectedIndex].value;
+    e.selectedIndex = 0;
     return getAlign(Style);
 }//get selected align option
 function getAlign(data) {
     // obtain the object reference for the textarea>
     let txtarea = document.getElementById("text1");
     // obtain the index of the first selected character
-    let start = txtarea.selectionStart.toString();
+    let start = txtarea.selectionStart;
     // obtain the index of the last selected character
-    let finish = txtarea.selectionEnd.toString();
+    let finish = txtarea.selectionEnd;
+    console.log(start);
+    console.log(finish);
     let allText = txtarea.value;
     // obtain the selected text
     let sel = "";
@@ -62,10 +66,8 @@ function getAlign(data) {
         sel = sel + allText[i];
         console.log(sel);
     }
-    let startInt = parseInt(start);
-    let finishInt = parseInt(finish);
     //append the text;
-    let newText = allText.substring(0, startInt) +"<a:" +data+">" +sel+"</a>" + allText.substring(finishInt, allText.length);
+    let newText = allText.substring(0, start) +"<a:" +data+">" +sel+"</a>" + allText.substring(parseInt(finish ), allText.length);
     txtarea.value = newText;
 }//insert align tag into text editor
 
@@ -73,15 +75,16 @@ function getAlign(data) {
 function selectSize(){
     let e = document.getElementById("s2");
     let Style = e.options[e.selectedIndex].value;
+    e.selectedIndex = 0;
     return getSize(Style);
 }//get selected size option
 function getSize(data) {
     // obtain the object reference for the textarea>
     let textSize = document.getElementById("text1");
     // obtain the index of the first selected character
-    let start = textSize.selectionStart.toString();
+    let start = txtarea.selectionStart;
     // obtain the index of the last selected character
-    let finish = textSize.selectionEnd.toString();
+    let finish = txtarea.selectionEnd;
     let allText = textSize.value;
     // obtain the selected text
     let sel = "";
@@ -100,16 +103,16 @@ function getSize(data) {
 function selectFont(){
     let e = document.getElementById("s4");
     let Style = e.options[e.selectedIndex].value;
-    console.log(Style);
+    e.selectedIndex = 0;
     return getFont(Style);
 }//get selected font option
 function getFont(data) {
     // obtain the object reference for the textarea>
     let textSize = document.getElementById("text1");
     // obtain the index of the first selected character
-    let start = textSize.selectionStart.toString();
+    let start = txtarea.selectionStart;
     // obtain the index of the last selected character
-    let finish = textSize.selectionEnd.toString();
+    let finish = txtarea.selectionEnd;
     let allText = textSize.value;
     // obtain the selected text
     let sel = "";
@@ -128,16 +131,16 @@ function getFont(data) {
 function selectColor(){
     let e = document.getElementById("s5");
     let Style = e.options[e.selectedIndex].value;
-    console.log(Style);
+    e.selectedIndex = 0;
     return getColor(Style);
 }//get selected color option
 function getColor(data) {
     // obtain the object reference for the textarea>
     let textSize = document.getElementById("text1");
     // obtain the index of the first selected character
-    let start = textSize.selectionStart.toString();
+    let start = txtarea.selectionStart;
     // obtain the index of the last selected character
-    let finish = textSize.selectionEnd.toString();
+    let finish = txtarea.selectionEnd;
     let allText = textSize.value;
     // obtain the selected text
     let sel = "";
@@ -150,6 +153,7 @@ function getColor(data) {
     //append the text;
     let newText = allText.substring(0, startInt) +"<color:" +data+">" +sel+ "</color>" + allText.substring(finishInt, allText.length);
     textSize.value = newText;
+
 }//insert color tag into text editor
 
 
@@ -165,12 +169,13 @@ function Render(){
         .replace(/(<\/color>)/g,'</span>')													//Replace tag </color> with </span>
         .replace(/<font:((\w+)((\s*)(\w*))*)>/g, "<span style=\"font-family:'$1'\">")		//Replace tag <font:[font name]> with <span style="font-family:[font name]>
         .replace(/<\/font>/g,'</span>')													//Replace tag </font> with </span>
-        .replace(/<size:(\d+)px>/g, "<span style=\"font-size:$1px\">")						//Replace tag <size:[font size]px> with <span style="font-size:[font size]px>
+        .replace(/<size:(\d+)px>/g, "<span class='align' style=\"font-size:$1px\">")						//Replace tag <size:[font size]px> with <span style="font-size:[font size]px>
         .replace(/<\/size>/g, '</span>')													//Replace tag </size> with </span>
-        .replace(/<a:(\w+)>/g, "<p align=\"$1\">")                                      //replace tag <a:[text align]> with <align=[text align]>
-        .replace(/<\/a>/g, '</p>')                                                      //replace tag </a> with </align>
+        .replace(/<a:(\w+)>/g, "<span class=\"$1\">")                                      //replace tag <a:[text align]> with <align=[text align]>
+        .replace(/<\/a>/g, '</span>')                                                      //replace tag </a> with </align>
         .replace(/<footnote:(\d+)>(.*?)<\/footnote>/g, "<a href=\"#source-$1\" id=\"footnote-$1\">" + '[$1]' + "</a>")
-        .replace(/<chapter:(\d+)>(.*?)<\/chapter>/g, "<h2 id=\"chapter-$1\">" + 'Chapter $1 - $2' + "</h2>");
+        .replace(/<chapter:(\d+)>(.*?)<\/chapter>/g, "<h2 id=\"chapter-$1\">" + 'Chapter $1 - $2' + "</h2>")
+        .replace(/\n/g,"<br/>");
     console.log(authorInput);
     authorInput = "<html>" + authorInput + "</html>";
     RenderFootnote(authorInput);
@@ -179,7 +184,6 @@ function Render(){
     console.log(convertInputToHTMLElem);
     document.getElementById("text2").innerHTML = convertInputToHTMLElem.firstChild.innerHTML;
 } //render tags in text editor to HTML tags
-
 
 function Save(){
     let Title = document.getElementById("Title").value;

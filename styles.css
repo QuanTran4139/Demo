@@ -10,23 +10,22 @@ body {
 }
 .t2{
     width: 4px;
-    height: 0px;
     position: absolute;
-    left: 460px;
+    left:100px;
     top: 5%;
 }
 .t3{
     width: 150px;
     height: 70px;
     position: absolute;
-    left:640px;
+    left:300px;
     top: 10.3%;
 }
 .t4{
     width: 125px;
     height: 70px;
     position: absolute;
-    top: 57%;
+
 }
 .b1{
     width: 50px;
@@ -36,78 +35,77 @@ body {
     top: 25%;
 }
 .bR{
-    width: 100px;
+    width: 80px;
     height: 25px;
     position: absolute;
-    left:360px;
     top: 30%;
 }
 .bS{
-    width: 100px;
+    width: 80px;
     height: 25px;
     position: absolute;
-    left: 360px;
     top: 35%;
 }
 .bFnt{
     width: 100px;
     height: 25px;
     position: absolute;
-    left: 460px;
+    left: 100px;
     top: 25%;
 }
 .s1{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 560px;
+    left: 200px;
     top: 25%;
 }
 .s2{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 610px;
+    left: 250px;
     top: 25%;
 }
 .s3{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 660px;
+    left: 300px;
     top: 25%;
 }
 .s4{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 710px;
+    left: 350px;
     top: 25%;
 }
 .s5{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 760px;
+    left: 400px;
     top: 25%;
 }
 .text1{
     width: 350px;
     height: 500px;
     position: absolute;
-    left: 460px;
+    left: 100px;
     top: 30%;
 }
+.textEdit{
+    position: absolute;
+    left: 500px;
+    top: 20%;
+}
+
 .text2{
-    width: 350px;
+    width: 1000px;
     height: 500px;
     position: absolute;
-    left: 820px;
-    top: 30%;
-}
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+    border: 1px red solid;
 }
 .ChapterNumber{
     width: 100px;
@@ -116,4 +114,16 @@ input[type=number]::-webkit-outer-spin-button {
     left: 1px;
     top: 25%;
 
+}
+.left{
+    display:inline-block;
+
+}
+.center{
+    display: inline-block;
+    align-content: center;
+    border: solid black;
+}
+.right{
+    display: inline-block;
 }
