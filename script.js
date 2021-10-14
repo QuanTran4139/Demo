@@ -50,26 +50,49 @@ function selectAlign(){
     return getAlign(Style);
 }//get selected align option
 function getAlign(data) {
-    // obtain the object reference for the textarea>
-    let txtarea = document.getElementById("text1");
-    // obtain the index of the first selected character
-    let start = txtarea.selectionStart;
-    // obtain the index of the last selected character
-    let finish = txtarea.selectionEnd;
-    console.log(start);
-    console.log(finish);
-    let allText = txtarea.value;
-    // obtain the selected text
-    let sel = "";
-    for(let i = start;i<finish;i++){
-        sel = sel + allText[i];
-        console.log(sel);
-    }
-    //append the text;
-    let newText = allText.substring(0, start) +"<a:" +data+">" +sel+"</a>" + allText.substring(parseInt(finish ), allText.length);
-    txtarea.value = newText;
-}//insert align tag into text editor
+    var contentBetweenTag = document.getElementById("text1");
+    var startCaret = document.getElementById("text1").selectionStart;
+    var endCaret = document.getElementById("text1").selectionEnd;
 
+    var lineBreakClosestToStartSelect = contentBetweenTag.value.substring(0, startCaret).lastIndexOf('\n');
+    var lineBreakClosestToEndSelect = contentBetweenTag.value.indexOf('\n', endCaret);
+    var placeToOpenAlign, placeToCloseAlign;
+    console.log(lineBreakClosestToStartSelect);
+    console.log(lineBreakClosestToEndSelect);
+
+    if (lineBreakClosestToStartSelect == -1 && lineBreakClosestToEndSelect == -1)
+    {
+        placeToOpenAlign = -1;
+        placeToCloseAlign = contentBetweenTag.value.length;
+    }
+    else if (lineBreakClosestToStartSelect != -1 && lineBreakClosestToEndSelect == -1)
+    {
+        placeToOpenAlign = lineBreakClosestToStartSelect;
+        placeToCloseAlign = contentBetweenTag.value.length;
+    }
+    else if (lineBreakClosestToStartSelect == -1 && lineBreakClosestToEndSelect != -1)
+    {
+        placeToOpenAlign = -1;
+        placeToCloseAlign = lineBreakClosestToEndSelect;
+    }
+    else
+    {
+        placeToOpenAlign = lineBreakClosestToStartSelect;
+        placeToCloseAlign = lineBreakClosestToEndSelect;
+    }
+
+    console.log("open at: " + placeToOpenAlign + " close at: " + placeToCloseAlign);
+    var openTag = "<a:center>";
+    var closeTag = "</a>";
+
+    console.log(contentBetweenTag.value.substring(0, startCaret));
+    console.log(contentBetweenTag.value.substring(placeToCloseAlign, contentBetweenTag.value.length));
+    contentBetweenTag.value = contentBetweenTag.value.substring(0, placeToOpenAlign + 1)
+        + openTag
+        + contentBetweenTag.value.substring(placeToOpenAlign + 1, placeToCloseAlign)
+        + closeTag
+        + contentBetweenTag.value.substring(placeToCloseAlign, contentBetweenTag.value.length);
+}
 
 function selectSize(){
     let e = document.getElementById("s2");
@@ -171,9 +194,18 @@ function Render(){
         .replace(/<\/size>/g, '</span>')													//Replace tag </size> with </span>
         .replace(/<a:(\w+)>/g, "<span class=\"$1\">")                                      //replace tag <a:[text align]> with <align=[text align]>
         .replace(/<\/a>/g, '</span>')                                                      //replace tag </a> with </align>
-        .replace(/<footnote:(\d+)>(.*?)<\/footnote>/g, "<a href=\"#source-$1\" id=\"footnote-$1\">" + '[$1]' + "</a>")
         .replace(/<chapter:(\d+)>(.*?)<\/chapter>/g, "<h2 id=\"chapter-$1\">" + 'Chapter $1 - $2' + "</h2>")
         .replace(/\n/g,"<br></br>");
+    if (GetFoonoteContent() != null)
+    {
+        var replaceContent = GetFoonoteContent();
+        var footnoteContentArray = replaceContent.split(",");
+        console.log("array: " + footnoteContentArray);
+        for (var cnt = 1; cnt <= footnoteContentArray.length; cnt++)
+        {
+            authorInput = authorInput.replace(/<footnote>(.*?)<\/footnote>/, '<a href=\"#source-' + cnt + '"' + ' id=\"footnote-' + cnt + '">' + '[' + cnt  + ']' + '</a>');
+        }
+    }
     console.log(authorInput);
     authorInput = "<html>" + authorInput + "</html>";
     RenderFootnote(authorInput);
@@ -181,6 +213,7 @@ function Render(){
     var convertInputToHTMLElem = new DOMParser().parseFromString(authorInput, "text/xml");
     console.log(convertInputToHTMLElem);
     document.getElementById("text2").innerHTML = convertInputToHTMLElem.firstChild.innerHTML;
+    GetRenderedContentToTextarea();
 } //render tags in text editor to HTML tags
 
 function Save(){
@@ -199,7 +232,7 @@ function Save(){
     }
 }
 
-
+//This function is used to add footnote or chapter tags
 function AddFootnoteOrChapter(footnoteOrChapter){
     if (footnoteOrChapter == "footnoteNumber")
     {
@@ -216,36 +249,51 @@ function AddFootnoteOrChapter(footnoteOrChapter){
             + closeTag
             + contentBetweenTag.value.substring(endCaret, contentBetweenTag.value.length);
     }
-}//This function is used to add footnote tags
+    else if (footnoteOrChapter == "chapterNumber")
+    {
+        var contentBetweenTag = document.getElementById("text1");
+        var selectedContent = document.getSelection().toString();
+        var startCaret = document.getElementById("text1").selectionStart;
+        var endCaret = document.getElementById("text1").selectionEnd;
+        var openTag = "<chapter:[replace this with a chapter number and add chapter content between these tags]>";
+        var closeTag = "</chapter>";
 
+        contentBetweenTag.value = contentBetweenTag.value.substring(0, startCaret)
+            + openTag
+            + selectedContent
+            + closeTag
+            + contentBetweenTag.value.substring(endCaret, contentBetweenTag.value.length);
+    }
+}
 
+//This function is used to render the footnotes
 function RenderFootnote(){
-    //These 3 lines are used to get the contents of the footnotes and put them into an array called "footnoteContentArray"
-    //var footnote = document.getElementById("text1").value;
+    //These 2 lines are used to reset the footnote div element in the HTML file
+    var footnoteElem = document.getElementById("footnote");
+    footnoteElem.innerHTML = "<hr>";
+
+    //The conditional statement here is to check if there are any footnotes in the input box or not
     if (GetFoonoteContent() != null)
     {
+        //These 2 lines are used to put the contents of the footnotes into an array called "footnoteContentArray"
         var replaceContent = GetFoonoteContent();
         var footnoteContentArray = replaceContent.split(",");
 
-        //This for loop is used to create div elements with id according to the id of the footnotes
-        var footnoteElem = document.getElementById("footnote");
-        footnoteElem.innerHTML = "<hr>";
+        //This for loop is used to create div child elements inside the footnote div element in the HTML file
         var footnoteDiv;
-        //for (var i = footnoteContentArray.length; i > 0; i--)
         for (var i = 1; i <= footnoteContentArray.length; i++)
         {
-            //This conditional statement is used to check if the element to be created has been created or not.
-            //This is used to prevent duplication of elementsvar cnt = i+1;
+            //This conditional statement is used to check if the footnote and its content has existed or not.
+            //If not, then we will create it.
             if (document.getElementById("source-" + i) == null)
             {
                 footnoteDiv = document.createElement("div");
                 footnoteDiv.id = "source-" + i;
                 footnoteElem.appendChild(footnoteDiv);
-                //insertAfter(footnoteElem, footnoteDiv);
             }
         }
 
-        //This loop is used to add the contents of footnotes inside the div element created by the above loop
+        //This for loop is used to add the actual content into the footnote.
         for (var i = 0; i < footnoteContentArray.length; i++)
         {
             var cnt = i+1;
@@ -256,15 +304,15 @@ function RenderFootnote(){
     {
         return;
     }
-}//This function is used to render the footnotes
+}
 
-
+//This function is used to get the actual content between the footnote tags
 function GetFoonoteContent(){
     var entireInput = document.getElementById("text1").value;
-    if (entireInput.match(/<footnote:(\d+)>(.*?)<\/footnote>/g) != null)
+    if (entireInput.match(/<footnote>(.*?)<\/footnote>/g) != null)
     {
-        var entireFootnotes = entireInput.match(/<footnote:(\d+)>(.*?)<\/footnote>/g).toString();
-        var actualContent = entireFootnotes.replace(/<footnote:(\d+)>(.*?)<\/footnote>/g, '$2');
+        var entireFootnotes = entireInput.match(/<footnote>(.*?)<\/footnote>/g).toString();
+        var actualContent = entireFootnotes.replace(/<footnote>(.*?)<\/footnote>/g, '$1');
         console.log(actualContent);
 
         return actualContent;
@@ -273,55 +321,66 @@ function GetFoonoteContent(){
     {
         return null;
     }
-}//This function is used to get the actual content between the footnote tags
+}
+/*function GetFoonoteContent()
+{
+	var entireInput = document.getElementById("text1").value;
+	if (entireInput.match(/<footnote:(\d+)>(.*?)<\/footnote>/g) != null)
+	{
+		var entireFootnotes = entireInput.match(/<footnote:(\d+)>(.*?)<\/footnote>/g).toString();
+		var actualContent = entireFootnotes.replace(/<footnote:(\d+)>(.*?)<\/footnote>/g, '$2');
+		console.log(actualContent);
 
+		return actualContent;
+	}
+	else
+	{
+		return null;
+	}
+}*/
 
+//This function is used to render the chapters
 function RenderChapter(){
-    //These 3 lines are used to get the contents of the footnotes and put them into an array called "footnoteContentArray"
-    //var footnote = document.getElementById("text1").value;
+    //These 2 lines are used to reset the chapter div element in the HTML file
+    var chapterElem = document.getElementById("chapter");
+    chapterElem.innerHTML = '';
+
+    //The conditional statement here is to check if there are any chapters in the input box or not
     if (GetChapterContent() != null)
     {
+        //These 2 lines are used to put the chapters' names into an array called "chapterContentArray"
         var replaceContent = GetChapterContent();
         var chapterContentArray = replaceContent.split(",");
 
-        //This for loop is used to create div elements with id according to the id of the footnotes
-        var chapterElem = document.getElementById("chapter");
+        //This for loop is used to create div child elements inside the chapter div element in the HTML file
         var chapterDiv;
         for (var i = 1; i <= chapterContentArray.length; i++)
         {
-            //This conditional statement is used to check if the element to be created has been created or not.
-            //This is used to prevent duplication of elementsvar cnt = i+1;
-            if (document.getElementById("chapter-" + i) == null)
+            //This conditional statement is used to check if the chapter and its content has existed or not.
+            //If not, then we will create it.
+            if(document.getElementById("goToChapter-" + i) == null)
             {
                 chapterDiv = document.createElement("div");
-                chapterDiv.id = "chapter-" + i;
-                chapterElem.appendChild(chapterDiv);
-            }
-            else
-            {
-                var thisChapterElem = document.getElementById("chapter-" + i);
-                thisChapterElem.remove();
-                chapterDiv = document.createElement("div");
-                chapterDiv.id = "chapter-" + i;
+                chapterDiv.id = "goToChapter-" + i;
                 chapterElem.appendChild(chapterDiv);
             }
         }
 
-        //This loop is used to add the contents of footnotes inside the div element created by the above loop
+        //This for loop is used to add the actual content into the chapter in the "Table of contents".
         for (var i = 0; i < chapterContentArray.length; i++)
         {
             var cnt = i+1;
-            //document.getElementById("chapter-" + cnt).innerHTML = chapterContentArray[i] + '<a href="#chapter-' + cnt + '">[Back to footnote ' + cnt + ']</a>';
-            document.getElementById("chapter-" + cnt).innerHTML = '<a href="#chapter-' + cnt + '">' + 'Chapter ' + cnt + ' - ' + chapterContentArray[i] + '</a>';
+            console.log("cnt = " + cnt);
+            document.getElementById("goToChapter-" + cnt).innerHTML = '<a href="#chapter-' + cnt + '">' + 'Chapter ' + cnt + ' - ' + chapterContentArray[i] + '</a>';
         }
     }
     else
     {
         return;
     }
-}//This function is used to render the Chapter
+}
 
-
+//This function is used to get the actual content between the chapter tags
 function GetChapterContent(){
     var entireInput = document.getElementById("text1").value;
     if (entireInput.match(/<chapter:(\d+)>(.*?)<\/chapter>/g) != null)
@@ -336,10 +395,15 @@ function GetChapterContent(){
     {
         return null;
     }
-}//This function is used to get the actual content between the Chapter tags
+}
 
-
+//This function is used to add a new DOM element after a DOM element.
+//Taken from: https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
 function insertAfter(referenceNode, newNode) {
     referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}//This function is used to add a new DOM element after a DOM element.
-//Taken from: https://stackoverflow.com/questions/4793604/how-to-insert-an-element-after-another-element-in-javascript-without-using-a-lib
+}
+
+function GetRenderedContentToTextarea(){
+    document.getElementById("outputHidden").value = document.getElementById("renderedOutputHidden").innerHTML;
+    console.log(document.getElementById("outputHidden").value);
+}

@@ -112,25 +112,3 @@ body {
     top: 25%;
 
 }
-
-.left{
-    display:inline-block;
-    text-align: left;
-    margin-top: auto;
-    margin-bottom: auto;
-    width: 100%;
-}
-.center{
-    display: inline-block;
-    text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
-    width: 100%;
-}
-.right{
-    display: inline-block;
-    text-align: right;
-    margin-top: auto;
-    margin-bottom: auto;
-    width: 100%;
-}
