@@ -240,7 +240,7 @@ function AddFootnoteOrChapter(footnoteOrChapter){
         var selectedContent = document.getSelection().toString();
         var startCaret = document.getElementById("text1").selectionStart;
         var endCaret = document.getElementById("text1").selectionEnd;
-        var openTag = "<footnote:[replace this with a number and add content between these tags]>";
+        var openTag = "<footnote>";
         var closeTag = "</footnote>";
 
         contentBetweenTag.value = contentBetweenTag.value.substring(0, startCaret)
