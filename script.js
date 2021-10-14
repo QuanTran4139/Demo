@@ -82,7 +82,7 @@ function getAlign(data) {
     }
 
     console.log("open at: " + placeToOpenAlign + " close at: " + placeToCloseAlign);
-    var openTag = "<a:center>";
+    var openTag = "<a:"+data+">";
     var closeTag = "</a>";
 
     console.log(contentBetweenTag.value.substring(0, startCaret));
