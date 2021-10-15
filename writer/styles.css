@@ -10,78 +10,126 @@ body {
 }
 .t2{
     width: 4px;
-    height: 0px;
     position: absolute;
-    left: 460px;
+    left:100px;
     top: 5%;
 }
 .t3{
-    width: 70px;
+    width: 150px;
     height: 70px;
     position: absolute;
-    left:460px;
-    top: 16%;
+    left:300px;
+    top: 10.3%;
+}
+.t4{
+    width: 125px;
+    height: 70px;
+    position: absolute;
+
 }
 .b1{
     width: 50px;
-    height: 20px;
+    height: 23px;
     position: absolute;
-    left:630px;
-    top: 18.5%;
+    left: 110px;
+    top: 25%;
 }
 .bR{
-    width: 100px;
+    width: 80px;
     height: 25px;
     position: absolute;
-    left:360px;
     top: 30%;
 }
-.bE{
-    width: 100px;
+.bS{
+    width: 80px;
     height: 25px;
     position: absolute;
-    left: 360px;
     top: 35%;
 }
 .bFnt{
     width: 100px;
     height: 25px;
     position: absolute;
-    left: 460px;
+    left: 100px;
     top: 25%;
 }
 .s1{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 560px;
+    left: 200px;
     top: 25%;
 }
 .s2{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 610px;
+    left: 250px;
     top: 25%;
 }
 .s3{
     width: 50px;
     height: 25px;
     position: absolute;
-    left: 660px;
+    left: 300px;
+    top: 25%;
+}
+.s4{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 350px;
+    top: 25%;
+}
+.s5{
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    left: 400px;
     top: 25%;
 }
 .text1{
     width: 350px;
     height: 500px;
     position: absolute;
-    left: 460px;
+    left: 100px;
     top: 30%;
 }
-.text2{
-    width: 350px;
-    height: 500px;
+.textEdit{
     position: absolute;
-    left: 820px;
-    top: 30%;
+    left: 500px;
+    top: 20%;
+    width:800px;
+    height:700px;
+}
+
+
+.ChapterNumber{
+    width: 100px;
+    height: 17px;
+    position: absolute;
+    left: 1px;
+    top: 25%;
+
+}
+.left{
+    display:inline-block;
+    text-align: left;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+}
+.center{
+    display: inline-block;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
+}
+.right{
+    display: inline-block;
+    text-align: right;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 100%;
 }

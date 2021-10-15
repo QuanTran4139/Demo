@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="text/javascript" src="highlightText.js"></script>
+    <script type="text/javascript" src="unhighlightText.js"></script>
+    <script type="text/javascript" src="zoomInOut.js"></script>
+    <script type₫="text/jvascript" src="renderText.js"></script>
+    <script type₫="text/jvascript" src="selectSize.js"></script>
+    <script type₫="text/jvascript" src="selectFont.js"></script>
+    <script type₫="text/jvascript" src="newHighlight.js"></script>
+    <script type₫="text/jvascript" src="newUnhighlight.js"></script>
+    <script type="text/javascript" src="bookmark.js"></script>
+    <script type="text/javascript" src="saveStateOfPage.js"></script>
+    <div class="fixOptions">
+      <select id="selectSize" onchange="selectSize(this); SaveCurrentState();">
+        <option value="" selected disabled hidden>Size</option>
+        <option>50%</option>
+        <option>100%</option>
+        <option>150%</option>
+        <option>200%</option>
+        <option>250%</option>
+        <option>300%</option>
+        <option>350%</option>
+      </select>
+      <select id="selectFont" onchange="selectFont(this); SaveCurrentState();">
+        <option value="" selected disabled hidden>Font</option>
+        <option>Georgia</option>
+        <option>Palatino Linotype</option>
+        <option>Book Antiqua</option>
+        <option>Times New Roman</option>
+        <option>Arial</option>
+        <option>Helvetica</option>
+        <option>Arial Black</option>
+        <option>Impact</option>
+        <option>Lucida Sans Unicode</option>
+        <option>Tahoma</option>
+        <option>Verdana</option>
+        <option>Courier New</option>
+        <option>Lucida Console</option>
+      </select>
+      <button id="bookmarkBtn" onclick="AddBookmark(); SaveCurrentState();">
+        Add Bookmark
+      </button>
+      <button id="zoomIn" onclick="zoom(this.id); SaveCurrentState();">
+        Zoom In
+      </button>
+      <button id="zoomOut" onclick="zoom(this.id); SaveCurrentState();">
+        Zoom Out
+      </button>
+      <button onclick="newHighlight(); SaveCurrentState();">Highlight</button>
+      <button onclick="newUnhighlight(); SaveCurrentState();">
+        Unighlight
+      </button>
+    </div>
+  </head>
+  <body>
+    <div class="container" id="textContent" contenteditable="true">
+      <div id="tableOfContent"></div>
+<!--      INSERT HERE-->
+<!--      <p>-->
+<!--        <size:16px><chapter:1>Intr<italic>oduction</italic> </chapter></size> <bold>chapter 1 <color:blue>content</color></bold> <a:center>something else</a>-->
+<!--          <b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting-->
+<!--        industry. Lorem Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--        <u-->
+<!--          ><i><b>Lorem ipsum</b></i></u-->
+<!--        >-->
+<!--        is simply dummy text of the printing and typesetting industry. Lorem-->
+<!--        Ipsum has been the industry's standard dummy text ever-->
+<!--        <span style="font-size: 200%;"-->
+<!--          >since the 1500s, when an unknown printer </span-->
+<!--        >took a galley of type and scrambled it to make a type specimen book. It-->
+<!--        has survived not only five centuries, but also the leap into electronic-->
+<!--        typesetting, remaining essentially unchanged. It was-->
+<!--        <right-->
+<!--          >popularised in the 1960s with the release of Letraset sheets-->
+<!--          containing Lorem Ipsum passages</right-->
+<!--        >, and more-->
+<!--        <span style="font-size: 300%;"-->
+<!--          >recently with desktop publishing software like Aldus </span-->
+<!--        >PageMaker including versions of Lorem Ipsum.-->
+<!--      </p>-->
+    </div>
+  </body>
+</html>

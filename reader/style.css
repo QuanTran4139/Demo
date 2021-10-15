@@ -1,0 +1,19 @@
+.highlightText {
+  background-color: #00ff00;
+}
+.unhighlightText {
+  background-color: #ffffdd;
+}
+.container {
+  background-color: #ffffdd;
+  border: 1px solid #000;
+}
+.fixOptions {
+  margin-left: 40%;
+  position: fixed;
+  top: 0px;
+  height: 22px;
+  width: 100%;
+  border: 1px #000;
+  background-color: rgb(128, 0, 0);
+}
